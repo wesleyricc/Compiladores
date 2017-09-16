@@ -2,6 +2,7 @@
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,7 +20,10 @@ public class Principal extends javax.swing.JFrame {
      */
     ManipuladorArquivos marq = new ManipuladorArquivos();
     boolean controle = false;
-    String nomeArquivo, textoArquivo;
+    String nomeArquivo, textoArquivo, palavra;
+
+    
+    private final ManipuladorAutomato maut = new ManipuladorAutomato();
 
     public Principal() {
         initComponents();
@@ -65,7 +69,7 @@ public class Principal extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Linha", "Título 2", "Título 3"
+                "Linha", "Código", "Token"
             }
         ) {
             Class[] types = new Class [] {
@@ -120,9 +124,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(menuArquivo);
 
         menuExecutar.setText("Executar");
-        menuExecutar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuExecutarActionPerformed(evt);
+        menuExecutar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuExecutarMouseClicked(evt);
             }
         });
         jMenuBar1.add(menuExecutar);
@@ -146,34 +150,19 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void contaLinhas() {
-
-        String texto = areaTexto.getText();
-
-        int quebras = 0;
-
-        for (int i = 0; i < texto.length(); i++) {
-            if (texto.charAt(i) == '\n') {
-                quebras++;
-            }
-
-            System.out.println("" + quebras);
-        }
-
-    }
 
     private void arquivoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arquivoNovoActionPerformed
 
@@ -239,16 +228,39 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_arquivoSairActionPerformed
 
-    private void menuExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExecutarActionPerformed
+    private void menuExecutarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuExecutarMouseClicked
+        palavra = areaTexto.getText() + "$";     
+        gets_sets_Tokens tokenFinal = maut.getToken(palavra);
+        
+        setTokenTabela(tokenFinal);
+        
 
-        contaLinhas();
+    }//GEN-LAST:event_menuExecutarMouseClicked
 
-    }//GEN-LAST:event_menuExecutarActionPerformed
+    public void setTokenTabela(gets_sets_Tokens t) {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+        DefaultTableModel modeloTok = (DefaultTableModel) tabelaToken.getModel();
+
+        for (int i = 0; i < t.getCodigo().size(); i++) {
+
+            modeloTok.addRow(new Object[]{t.getLinha().get(i), t.getCodigo().get(i), t.getToken().get(i)});
+        }
+        /*if (t.getErro_linha() != null) {
+            gets_sets_Tokens err = t.getErro_linha();
+            DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
+            for (int i = 0; i < err.getErro().size(); i++) {
+
+                modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
+
+            }
+        }*/
+    }
+
+
+/**
+ * @param args the command line arguments
+ */
+public static void main(String args[]) {
 
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -261,23 +273,35 @@ public class Principal extends javax.swing.JFrame {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-                }
+                
+
+}
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Principal.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
 
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+} catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(Principal.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+        
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Principal.class
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+        
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Principal.class
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
