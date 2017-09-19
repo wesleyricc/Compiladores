@@ -22,7 +22,6 @@ public class Principal extends javax.swing.JFrame {
     boolean controle = false;
     String nomeArquivo, textoArquivo, palavra;
 
-    
     private final ManipuladorAutomato maut = new ManipuladorAutomato();
 
     public Principal() {
@@ -40,8 +39,11 @@ public class Principal extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         areaTexto = new javax.swing.JTextArea();
+        painelGuias = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaToken = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabelaErros = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         arquivoNovo = new javax.swing.JMenuItem();
@@ -77,6 +79,20 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(tabelaToken);
+
+        painelGuias.addTab("Tokens", jScrollPane2);
+
+        tabelaErros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Linha", "Erro"
+            }
+        ));
+        jScrollPane3.setViewportView(tabelaErros);
+
+        painelGuias.addTab("Erros", jScrollPane3);
 
         jMenuBar1.setToolTipText("");
 
@@ -146,14 +162,14 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
+            .addComponent(painelGuias, javax.swing.GroupLayout.DEFAULT_SIZE, 762, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                .addComponent(painelGuias, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -225,11 +241,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_arquivoSairActionPerformed
 
     private void menuExecutarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuExecutarMouseClicked
-        palavra = areaTexto.getText() + "$";     
+        palavra = areaTexto.getText() + "$";
         gets_sets_Tokens tokenFinal = maut.getToken(palavra);
-        
+
+        tabelaToken.removeAll();
+        tabelaErros.removeAll();
+
         setTokenTabela(tokenFinal);
-        
+        setTokenTabelaErros(tokenFinal);
+
 
     }//GEN-LAST:event_menuExecutarMouseClicked
 
@@ -241,22 +261,24 @@ public class Principal extends javax.swing.JFrame {
 
             modeloTok.addRow(new Object[]{t.getLinha().get(i), t.getCodigo().get(i), t.getToken().get(i)});
         }
-        /*if (t.getErro_linha() != null) {
-            gets_sets_Tokens err = t.getErro_linha();
-            DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
-            for (int i = 0; i < err.getErro().size(); i++) {
 
-                modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
-
-            }
-        }*/
     }
 
+    public void setTokenTabelaErros(gets_sets_Tokens t) {
 
-/**
- * @param args the command line arguments
- */
-public static void main(String args[]) {
+        DefaultTableModel modeloTokErro = (DefaultTableModel) tabelaErros.getModel();
+
+        for (int i = 0; i < t.getErro_linha().size(); i++) {
+
+            modeloTokErro.addRow(new Object[]{t.getErro_linha().get(i), t.getErro_desc().get(i)});
+        }
+
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
 
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -269,35 +291,23 @@ public static void main(String args[]) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-                
-
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        
-
-} catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        
-
-} catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Principal.class
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -319,9 +329,12 @@ public static void main(String args[]) {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenu menuExecutar;
+    private javax.swing.JTabbedPane painelGuias;
+    private javax.swing.JTable tabelaErros;
     private javax.swing.JTable tabelaToken;
     // End of variables declaration//GEN-END:variables
 }
