@@ -72,22 +72,282 @@ public class ManipuladorAutomato {
                     token = "";
                     contAux = cont;
                     consultaAspasDuplas(palavra);
-                
-                }else if (String.valueOf(palavra.charAt(i)).equals("'")){
+
+                } else if (String.valueOf(palavra.charAt(i)).equals("'")) {
                     token = "";
                     contAux = cont;
                     i++;
                     consultaAspas(palavra);
+
+                } else if (palavra.charAt(i) == '=') {
+                    i++;
+                    consultaIgual(palavra);
+
+                } else if (palavra.charAt(i) == '+') {
+                    i++;
+                    consultaMais(palavra);
+
+                } else if (palavra.charAt(i) == '-') {
+                    i++;
+                    consultaMenos(palavra);
+
+                } else if (palavra.charAt(i) == '>') {
+                    i++;
+                    consultaMaior(palavra);
+
+                } else if (palavra.charAt(i) == '<') {
+                    i++;
+                    consultaMenor(palavra);
+
+                } else if (palavra.charAt(i) == '!') {
+                    i++;
+                    consultaExclamacao(palavra);
+
+                } else if (palavra.charAt(i) == '*') {
+
+                    //Ainda falta linha
+                    objToken.setToken(token);
+                    objToken.setCodigo(41);
+                    objToken.setLinha(cont);
+                    i++;
+                    //verificar final de arquivo?
+                    automato(palavra);
+
+                } else if (palavra.charAt(i) == '/') {
+
+                    //Ainda falta coisa
+                    objToken.setCodigo(39);
+                    objToken.setToken(token);
+                    objToken.setLinha(cont);
+                    i++;
+                    //verificar final de arquivo?
+                    automato(palavra);
+
+                } else if (palavra.charAt(i) == '{') {
+
+                    objToken.setCodigo(36);
+                    objToken.setToken(token);
+                    objToken.setLinha(cont);
+                    i++;
+                    //verificar final de arquivo?
+                    automato(palavra);
+
+                } else if (palavra.charAt(i) == '}') {
+
+                    objToken.setCodigo(35);
+                    objToken.setToken(token);
+                    objToken.setLinha(cont);
+                    i++;
+                    //verificar final de arquivo?
+                    automato(palavra);
+
+                } else if (palavra.charAt(i) == '(') {
+
+                    objToken.setCodigo(43);
+                    objToken.setToken(token);
+                    objToken.setLinha(cont);
+                    i++;
+                    //verificar final de arquivo?
+                    automato(palavra);
+
+                } else if (palavra.charAt(i) == ')') {
+
+                    objToken.setCodigo(42);
+                    objToken.setToken(token);
+                    objToken.setLinha(cont);
+                    i++;
+                    //verificar final de arquivo?
+                    automato(palavra);
+
+                } else if (palavra.charAt(i) == ',') {
+
+                    objToken.setCodigo(40);
+                    objToken.setToken(token);
+                    objToken.setLinha(cont);
+                    i++;
+                    //verificar final de arquivo?
+                    automato(palavra);
+
+                } else if (palavra.charAt(i) == ':') {
+
+                    objToken.setCodigo(38);
+                    objToken.setToken(token);
+                    objToken.setLinha(cont);
+                    i++;
+                    //verificar final de arquivo?
+                    automato(palavra);
+
+                } else if (palavra.charAt(i) == ';') {
+
+                    objToken.setCodigo(37);
+                    objToken.setToken(token);
+                    objToken.setLinha(cont);
+                    i++;
+                    //verificar final de arquivo?
+                    automato(palavra);
                 }
 
+            } else {
+                objToken.setCodigo(44);
+                objToken.setToken(token);
+                objToken.setLinha(cont);
+                System.out.println("Fim");
             }
         }
     }
 
-    public void consultaAspas (String palavra){
-        
+    public void consultaExclamacao(String palavra) {
+
+        if (palavra.charAt(i) == '=') {
+
+            token += String.valueOf(palavra.charAt(i));
+            objToken.setCodigo(45);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            i++;
+            automato(palavra);
+
+        } else {
+
+            objToken.setLinhaErro(cont);
+            objToken.setErro("Caracter não incluso na lista de Tokens!");
+            i++;
+            automato(palavra);
+        }
+
     }
-    
+
+    public void consultaMaior(String palavra) {
+
+        if (palavra.charAt(i) == '>') {
+
+            token += String.valueOf(palavra.charAt(i));
+            objToken.setCodigo(25);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            i++;
+            automato(palavra);
+
+        } else if (palavra.charAt(i) == '=') {
+
+            token += String.valueOf(palavra.charAt(i));
+            objToken.setCodigo(26);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            i++;
+            automato(palavra);
+
+        } else {
+
+            objToken.setCodigo(27);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            i++;
+
+            automato(palavra);
+        }
+
+    }
+
+    public void consultaMenor(String palavra) {
+
+        if (palavra.charAt(i) == '<') {
+
+            token += String.valueOf(palavra.charAt(i));
+            objToken.setCodigo(31);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            i++;
+            automato(palavra);
+
+        } else if (palavra.charAt(i) == '=') {
+
+            token += String.valueOf(palavra.charAt(i));
+            objToken.setCodigo(30);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            i++;
+            automato(palavra);
+
+        } else {
+
+            objToken.setCodigo(32);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            i++;
+
+            automato(palavra);
+        }
+
+    }
+
+    public void consultaIgual(String palavra) {
+
+        if (palavra.charAt(i) == '=') {
+
+            token += String.valueOf(palavra.charAt(i));
+            objToken.setCodigo(28);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            i++;
+            automato(palavra);
+
+        } else {
+
+            objToken.setCodigo(29);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            automato(palavra);
+        }
+
+    }
+
+    public void consultaMenos(String palavra) {
+
+        if (palavra.charAt(i) == '-') {
+
+            token += String.valueOf(palavra.charAt(i));
+            objToken.setCodigo(46);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            i++;
+            automato(palavra);
+
+        } else {
+
+            objToken.setCodigo(47);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            automato(palavra);
+        }
+
+    }
+
+    public void consultaMais(String palavra) {
+
+        if (palavra.charAt(i) == '+') {
+
+            token += String.valueOf(palavra.charAt(i));
+            objToken.setCodigo(34);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            i++;
+            automato(palavra);
+
+        } else {
+
+            objToken.setCodigo(33);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+            automato(palavra);
+        }
+
+    }
+
+    public void consultaAspas(String palavra) {
+
+    }
+
     public void consultaAspasDuplas(String palavra) {
 
         if (palavra.charAt(i) == '@') {
@@ -104,16 +364,16 @@ public class ManipuladorAutomato {
             }
             i++;
         }
-        
-        if(token.length() < 129){
+
+        if (token.length() < 129) {
             objToken.setCodigo(9);
             objToken.setToken(token);
             objToken.setLinha(contAux);
-        } else{
+        } else {
             objToken.setLinhaErro(cont);
             objToken.setErro("Tamanho de String maior que o permitido!");
         }
-        
+
         i++;
         automato(palavra);
 
@@ -178,13 +438,20 @@ public class ManipuladorAutomato {
         }
 
         cont = cont + contaux;
-        int aux = i + 1;
 
         if (palavra.charAt(i) == '$') {
             objToken.setLinhaErro(cont);
             objToken.setErro("Erro em comentário de bloco, faltou o fechamento com cerquilhas!");
 
-        } else if (palavra.charAt(aux) != '#') {
+        }
+
+        i++;
+
+        if (palavra.charAt(i) == '#') {
+            i++;
+            automato(palavra);
+        } else {
+
             objToken.setLinhaErro(cont);
             objToken.setErro("Erro em comentário de bloco, faltou uma cerquilha!");
             //i++;
