@@ -11,7 +11,7 @@
  */
 public class ManipuladorAutomato {
 
-    private int i, cont;
+    private int i, cont, contAux;
     private String token;
     private gets_sets_Tokens objToken;
 
@@ -27,52 +27,151 @@ public class ManipuladorAutomato {
 
     public void automato(String palavra) {
 
-        token = "";
-        token += String.valueOf(palavra.charAt(i));
+        if (token != "$") {
+            token = "";
+            token += String.valueOf(palavra.charAt(i));
 
-        if (palavra.charAt(i) == ' ') {
-            i++;
-            automato(palavra);
-
-        } else if (palavra.charAt(i) == '\n') {
-            cont++;
-            i++;
-            automato(palavra);
-
-        } else if (palavra.charAt(i) == '\t') {
-            i++;
-            automato(palavra);
-
-        } else if (palavra.charAt(i) != '$') {
-
-            if (palavra.charAt(i) == '@') {
+            if (palavra.charAt(i) == ' ') {
                 i++;
-                consultaVariavel(palavra);  //variaveis
-            } else if (Character.isLetter(palavra.charAt(i))) {
-                i++;
-                consultaReservada(palavra);  //palavras reservadas
+                automato(palavra);
 
-            } else if (palavra.charAt(i) == '#') {
+            } else if (palavra.charAt(i) == '\n') {
+                cont++;
                 i++;
+                automato(palavra);
 
-                if (palavra.charAt(i) == '#') {
+            } else if (palavra.charAt(i) == '\t') {
+                i++;
+                automato(palavra);
+
+            } else if (palavra.charAt(i) != '$') {
+
+                if (palavra.charAt(i) == '@') {
                     i++;
-                    comentarioBloco(palavra);
-                } else {
-                    comentarioLinha(palavra);
+                    consultaVariavel(palavra);  //variaveis
+                } else if (Character.isLetter(palavra.charAt(i))) {
+                    i++;
+                    consultaReservada(palavra);  //palavras reservadas
+
+                } else if (palavra.charAt(i) == '#') {
+                    i++;
+
+                    if (palavra.charAt(i) == '#') {
+                        i++;
+                        comentarioBloco(palavra);
+                    } else {
+                        comentarioLinha(palavra);
+                    }
+
+                } else if (Character.isDigit(palavra.charAt(i))) {
+                    i++;
+                    consultaDigito(palavra);
+
+                } else if (palavra.charAt(i) == '"') {
+                    i++;
+                    token = "";
+                    contAux = cont;
+                    consultaAspasDuplas(palavra);
+                
+                }else if (String.valueOf(palavra.charAt(i)).equals("'")){
+                    token = "";
+                    contAux = cont;
+                    i++;
+                    consultaAspas(palavra);
                 }
 
             }
+        }
+    }
+
+    public void consultaAspas (String palavra){
+        
+    }
+    
+    public void consultaAspasDuplas(String palavra) {
+
+        if (palavra.charAt(i) == '@') {
+            objToken.setLinhaErro(contAux);
+            objToken.setErro("Erro em nome de String!");
 
         }
+
+        while (palavra.charAt(i) != '"') {
+            token += String.valueOf(palavra.charAt(i));
+
+            if (palavra.charAt(i) == '\n') {
+                cont++;
+            }
+            i++;
+        }
+        
+        if(token.length() < 129){
+            objToken.setCodigo(9);
+            objToken.setToken(token);
+            objToken.setLinha(contAux);
+        } else{
+            objToken.setLinhaErro(cont);
+            objToken.setErro("Tamanho de String maior que o permitido!");
+        }
+        
+        i++;
+        automato(palavra);
+
+    }
+
+    public void consultaDigito(String palavra) {
+
+        while (Character.isDigit(palavra.charAt(i))) {
+            token += String.valueOf(palavra.charAt(i));
+            i++;
+        }
+
+        if (palavra.charAt(i) == ',') {
+            token += String.valueOf(palavra.charAt(i));
+            i++;
+            consultaDigitoFloat(palavra);
+        } else {
+
+            if (token.length() < 11) {
+                objToken.setCodigo(5);
+                objToken.setToken(token);
+                objToken.setLinha(cont);
+            } else {
+                objToken.setLinhaErro(cont);
+                objToken.setErro("Tamanho do Integer maior que o permitido!");
+            }
+
+            automato(palavra);
+        }
+
+    }
+
+    public void consultaDigitoFloat(String palavra) {
+
+        while (Character.isDigit(palavra.charAt(i))) {
+            token += String.valueOf(palavra.charAt(i));
+            i++;
+        }
+
+        if (token.length() < 12) {
+            objToken.setCodigo(6);
+            objToken.setToken(token);
+            objToken.setLinha(cont);
+        } else {
+            objToken.setLinhaErro(i);
+            objToken.setErro("Tamanho do Float maior que o permitido!");
+        }
+
+        automato(palavra);
+
     }
 
     public void comentarioBloco(String palavra) {
 
         int contaux = 0;
         while (palavra.charAt(i) != '#' && palavra.charAt(i) != '$') {
-            
-            if(palavra.charAt(i) == '\n'){
+
+            if (palavra.charAt(i) == '\n') {
                 contaux++;
             }
             i++;
@@ -90,13 +189,13 @@ public class ManipuladorAutomato {
             objToken.setErro("Erro em comentário de bloco, faltou uma cerquilha!");
             //i++;
             //automato(palavra);
-            
-            while(palavra.charAt(i) != '$'){
+
+            while (palavra.charAt(i) != '$') {
                 i++;
             }
-            
+
         }
-        
+
         automato(palavra);
 
     }
