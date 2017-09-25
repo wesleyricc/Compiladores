@@ -20,6 +20,7 @@ public class ManipuladorAutomato {
 
         i = 0;
         cont = 1;
+        verifica = false;
         objToken = new gets_sets_Tokens();
         automato(palavra);
 
@@ -207,7 +208,11 @@ public class ManipuladorAutomato {
 
     public void consultaLiteral(String palavra) {
 
+        token = "";
+        
         while (palavra.charAt(i) != '!' && palavra.charAt(i) != '$') {
+
+            token += String.valueOf(palavra.charAt(i));
 
             if (palavra.charAt(i) == '\n') {
                 cont++;
@@ -225,7 +230,7 @@ public class ManipuladorAutomato {
         if (palavra.charAt(i) == '!') {
 
             objToken.setCodigo(11);
-            objToken.setToken("Literal");
+            objToken.setToken(token);
             objToken.setLinha(cont);
 
             i++;
@@ -233,7 +238,7 @@ public class ManipuladorAutomato {
         }
 
     }
-
+   
     public void consultaExclamacao(String palavra) {
 
         if (palavra.charAt(i) == '=') {
@@ -259,6 +264,7 @@ public class ManipuladorAutomato {
 
     public void consultaMaior(String palavra) {
 
+        
         if (palavra.charAt(i) == '>') {
 
             token += String.valueOf(palavra.charAt(i));
@@ -282,7 +288,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(27);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            i++;
+            //i++;
 
             automato(palavra);
         }
@@ -314,7 +320,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(32);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            i++;
+            //i++;
 
             automato(palavra);
         }
