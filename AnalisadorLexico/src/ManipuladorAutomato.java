@@ -196,6 +196,35 @@ public class ManipuladorAutomato {
         }
     }
 
+    public void consultaLiteral(String palavra) {
+
+        while (palavra.charAt(i) != '!' && palavra.charAt(i) != '$') {
+
+            if (palavra.charAt(i) == '\n') {
+                cont++;
+            }
+
+            i++;
+        }
+
+        if (palavra.charAt(i) == '$') {
+
+            objToken.setLinhaErro(cont);
+            objToken.setErro("Erro léxico no Literal, faltou fechamento com exclamação!");
+
+        }
+        if (palavra.charAt(i) == '!') {
+
+            objToken.setCodigo(11);
+            objToken.setToken("Literal");
+            objToken.setLinha(cont);
+
+            i++;
+            automato(palavra);
+        }
+
+    }
+
     public void consultaExclamacao(String palavra) {
 
         if (palavra.charAt(i) == '=') {
@@ -206,6 +235,10 @@ public class ManipuladorAutomato {
             objToken.setLinha(cont);
             i++;
             automato(palavra);
+
+        }
+        if (Character.isLetter(palavra.charAt(i))) {
+            consultaLiteral(palavra);
 
         } else {
 
