@@ -2,6 +2,7 @@
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -26,6 +27,13 @@ public class Principal extends javax.swing.JFrame {
 
     public Principal() {
         initComponents();
+        
+                // Linhas do texto
+        /*TextLineNumber tln = new TextLineNumber(areaTexto);
+        javax.swing.JScrollPane sp = new javax.swing.JScrollPane(areaTexto, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        sp.setRowHeaderView(tln);
+        this.setContentPane(sp);*/
+        
     }
 
     /**
