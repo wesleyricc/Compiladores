@@ -252,8 +252,7 @@ public class Principal extends javax.swing.JFrame {
         palavra = areaTexto.getText() + "$";
         gets_sets_Tokens tokenFinal = maut.getToken(palavra);
 
-        tabelaToken.removeAll();
-        tabelaErros.removeAll();
+       
 
         setTokenTabela(tokenFinal);
         setTokenTabelaErros(tokenFinal);
@@ -265,6 +264,9 @@ public class Principal extends javax.swing.JFrame {
 
         DefaultTableModel modeloTok = (DefaultTableModel) tabelaToken.getModel();
 
+        modeloTok.setNumRows(0); 
+        
+        
         for (int i = 0; i < t.getCodigo().size(); i++) {
 
             modeloTok.addRow(new Object[]{t.getLinha().get(i), t.getCodigo().get(i), t.getToken().get(i)});
@@ -276,6 +278,8 @@ public class Principal extends javax.swing.JFrame {
 
         DefaultTableModel modeloTokErro = (DefaultTableModel) tabelaErros.getModel();
 
+        modeloTokErro.setNumRows(0);
+        
         for (int i = 0; i < t.getErro_linha().size(); i++) {
 
             modeloTokErro.addRow(new Object[]{t.getErro_linha().get(i), t.getErro_desc().get(i)});
