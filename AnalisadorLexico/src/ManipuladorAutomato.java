@@ -14,6 +14,7 @@ public class ManipuladorAutomato {
     private int i, cont, contAux;
     private String token;
     private gets_sets_Tokens objToken;
+    private boolean verifica = false;
 
     public gets_sets_Tokens getToken(String palavra) {
 
@@ -188,10 +189,18 @@ public class ManipuladorAutomato {
                 }
 
             } else {
-                objToken.setCodigo(44);
-                objToken.setToken(token);
-                objToken.setLinha(cont);
-                System.out.println("Fim");
+
+                if (verifica) {
+
+                } else {
+                    verifica = true;
+
+                    objToken.setCodigo(44);
+                    objToken.setToken(token);
+                    objToken.setLinha(cont);
+                    System.out.println("Fim");
+                }
+
             }
         }
     }
@@ -236,8 +245,7 @@ public class ManipuladorAutomato {
             i++;
             automato(palavra);
 
-        }
-        if (Character.isLetter(palavra.charAt(i))) {
+        } else if (Character.isLetter(palavra.charAt(i))) {
             consultaLiteral(palavra);
 
         } else {
@@ -245,7 +253,6 @@ public class ManipuladorAutomato {
             objToken.setLinhaErro(cont);
             objToken.setErro("Caracter não incluso na lista de Tokens!");
             i++;
-            automato(palavra);
         }
 
     }
@@ -379,6 +386,27 @@ public class ManipuladorAutomato {
 
     public void consultaAspas(String palavra) {
 
+        if (Character.isLetter(palavra.charAt(i))) {
+            token += String.valueOf(palavra.charAt(i));
+            i++;
+
+            if (String.valueOf(palavra.charAt(i)).equals("'")) {
+
+                objToken.setCodigo(8);
+                objToken.setToken(token);
+                objToken.setLinha(cont);
+
+                i++;
+                automato(palavra);
+
+            } else {
+                objToken.setLinhaErro(cont);
+                objToken.setErro("Erro em char!");
+
+            }
+
+        }
+
     }
 
     public void consultaAspasDuplas(String palavra) {
@@ -389,7 +417,7 @@ public class ManipuladorAutomato {
 
         }
 
-        while (palavra.charAt(i) != '"') {
+        while (palavra.charAt(i) != '"' && palavra.charAt(i) != '$') {
             token += String.valueOf(palavra.charAt(i));
 
             if (palavra.charAt(i) == '\n') {
@@ -398,17 +426,26 @@ public class ManipuladorAutomato {
             i++;
         }
 
-        if (token.length() < 129) {
-            objToken.setCodigo(9);
-            objToken.setToken(token);
-            objToken.setLinha(contAux);
-        } else {
-            objToken.setLinhaErro(cont);
-            objToken.setErro("Tamanho de String maior que o permitido!");
-        }
+        if (palavra.charAt(i) == '$') {
 
-        i++;
-        automato(palavra);
+            objToken.setLinhaErro(cont);
+            objToken.setErro("Erro String! Faltou fechamento com aspas duplas!");
+        }
+        if (palavra.charAt(i) == '"') {
+
+            if (token.length() < 129) {
+                objToken.setCodigo(9);
+                objToken.setToken(token);
+                objToken.setLinha(contAux);
+
+            } else {
+                objToken.setLinhaErro(cont);
+                objToken.setErro("Tamanho de String maior que o permitido!");
+            }
+
+            i++;
+            automato(palavra);
+        }
 
     }
 
