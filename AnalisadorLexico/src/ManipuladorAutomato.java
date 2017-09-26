@@ -721,7 +721,7 @@ public class ManipuladorAutomato {
 
         } else {
             objToken.setLinhaErro(cont);
-            objToken.setErro("Declaração de variável errada!");
+            objToken.setErro("Caracter não identificado!");
             automato(palavra);
 
         }
