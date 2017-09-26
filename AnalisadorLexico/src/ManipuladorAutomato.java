@@ -209,7 +209,7 @@ public class ManipuladorAutomato {
     public void consultaLiteral(String palavra) {
 
         token = "";
-        
+
         while (palavra.charAt(i) != '!' && palavra.charAt(i) != '$') {
 
             token += String.valueOf(palavra.charAt(i));
@@ -238,7 +238,7 @@ public class ManipuladorAutomato {
         }
 
     }
-   
+
     public void consultaExclamacao(String palavra) {
 
         if (palavra.charAt(i) == '=') {
@@ -264,7 +264,6 @@ public class ManipuladorAutomato {
 
     public void consultaMaior(String palavra) {
 
-        
         if (palavra.charAt(i) == '>') {
 
             token += String.valueOf(palavra.charAt(i));
@@ -504,26 +503,21 @@ public class ManipuladorAutomato {
 
     public void comentarioBloco(String palavra) {
 
-        int contaux = 0;
+        int contaux = cont;
+
         while (palavra.charAt(i) != '#' && palavra.charAt(i) != '$') {
 
             if (palavra.charAt(i) == '\n') {
-                contaux++;
+                cont++;
             }
             i++;
         }
 
-        cont = cont + contaux;
-
         if (palavra.charAt(i) == '$') {
-            objToken.setLinhaErro(cont);
+            objToken.setLinhaErro(contaux);
             objToken.setErro("Erro em comentário de bloco, faltou o fechamento com cerquilhas!");
 
-        }
-
-        i++;
-
-        if (palavra.charAt(i) == '#') {
+        } else if (palavra.charAt(i + 1) == '#') {
             i++;
             automato(palavra);
         } else {
@@ -578,7 +572,6 @@ public class ManipuladorAutomato {
 
             objToken.setLinhaErro(cont);
             objToken.setErro("Declaração de variável errada!");
-            i++;
 
             while (Character.isDigit(palavra.charAt(i)) || Character.isLetter(palavra.charAt(i))) {
                 i++;
