@@ -438,7 +438,7 @@ public class ManipuladorAutomato {
         }
         if (palavra.charAt(i) == '"') {
 
-            if (token.length() < 129) {
+            if (token.length() < 128) {
                 objToken.setCodigo(9);
                 objToken.setToken(token);
                 objToken.setLinha(contAux);
