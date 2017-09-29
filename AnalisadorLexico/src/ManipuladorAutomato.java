@@ -60,14 +60,14 @@ public class ManipuladorAutomato {
 
                     if (palavra.charAt(i) == '#') {
                         i++;
-                        comentarioBloco(palavra);
+                        comentarioBloco(palavra);  //comentarios
                     } else {
                         comentarioLinha(palavra);
                     }
 
                 } else if (Character.isDigit(palavra.charAt(i))) {
                     i++;
-                    consultaDigito(palavra);
+                    consultaDigito(palavra); //inteiro e float
 
                 } else if (palavra.charAt(i) == '"') {
                     i++;
@@ -467,7 +467,7 @@ public class ManipuladorAutomato {
             consultaDigitoFloat(palavra);
         } else {
 
-            if (token.length() < 11) {
+            if (token.length() < 10) {
                 objToken.setCodigo(5);
                 objToken.setToken(token);
                 objToken.setLinha(cont);
@@ -487,13 +487,13 @@ public class ManipuladorAutomato {
             token += String.valueOf(palavra.charAt(i));
             i++;
         }
-
-        if (token.length() < 12) {
+        
+        if (token.length() < 15) {
             objToken.setCodigo(6);
             objToken.setToken(token);
             objToken.setLinha(cont);
         } else {
-            objToken.setLinhaErro(i);
+            objToken.setLinhaErro(cont);
             objToken.setErro("Tamanho do Float maior que o permitido!");
         }
 
