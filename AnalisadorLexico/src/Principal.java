@@ -27,13 +27,12 @@ public class Principal extends javax.swing.JFrame {
 
     public Principal() {
         initComponents();
-        
-                // Linhas do texto
+
+        // Linhas do texto
         /*TextLineNumber tln = new TextLineNumber(areaTexto);
         javax.swing.JScrollPane sp = new javax.swing.JScrollPane(areaTexto, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         sp.setRowHeaderView(tln);
         this.setContentPane(sp);*/
-        
     }
 
     /**
@@ -154,6 +153,11 @@ public class Principal extends javax.swing.JFrame {
         menuAjuda.setText("Ajuda");
 
         ajudaSobre.setText("Sobre");
+        ajudaSobre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ajudaSobreMouseClicked(evt);
+            }
+        });
         ajudaSobre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ajudaSobreActionPerformed(evt);
@@ -198,10 +202,6 @@ public class Principal extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_arquivoNovoActionPerformed
-
-    private void ajudaSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajudaSobreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ajudaSobreActionPerformed
 
     private void arquivoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arquivoSalvarActionPerformed
 
@@ -252,21 +252,29 @@ public class Principal extends javax.swing.JFrame {
         palavra = areaTexto.getText() + "$";
         gets_sets_Tokens tokenFinal = maut.getToken(palavra);
 
-       
-
         setTokenTabela(tokenFinal);
         setTokenTabelaErros(tokenFinal);
 
 
     }//GEN-LAST:event_menuExecutarMouseClicked
 
+    private void ajudaSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajudaSobreMouseClicked
+
+        
+    }//GEN-LAST:event_ajudaSobreMouseClicked
+
+    private void ajudaSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajudaSobreActionPerformed
+      
+        JOptionPane.showMessageDialog(null, "Analisador Léxico v2.1 - 02/10/2017\n\n\nPedro Henrique Bonetti\nWesley Ricardo de Souza");
+        
+    }//GEN-LAST:event_ajudaSobreActionPerformed
+
     public void setTokenTabela(gets_sets_Tokens t) {
 
         DefaultTableModel modeloTok = (DefaultTableModel) tabelaToken.getModel();
 
-        modeloTok.setNumRows(0); 
-        
-        
+        modeloTok.setNumRows(0);
+
         for (int i = 0; i < t.getCodigo().size(); i++) {
 
             modeloTok.addRow(new Object[]{t.getLinha().get(i), t.getCodigo().get(i), t.getToken().get(i)});
@@ -279,7 +287,7 @@ public class Principal extends javax.swing.JFrame {
         DefaultTableModel modeloTokErro = (DefaultTableModel) tabelaErros.getModel();
 
         modeloTokErro.setNumRows(0);
-        
+
         for (int i = 0; i < t.getErro_linha().size(); i++) {
 
             modeloTokErro.addRow(new Object[]{t.getErro_linha().get(i), t.getErro_desc().get(i)});
