@@ -107,22 +107,18 @@ public class ManipuladorAutomato {
 
                 } else if (palavra.charAt(i) == '*') {
 
-                    //Ainda falta linha
                     objToken.setToken(token);
                     objToken.setCodigo(41);
                     objToken.setLinha(cont);
                     i++;
-                    //verificar final de arquivo?
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == '/') {
 
-                    //Ainda falta coisa
                     objToken.setCodigo(39);
                     objToken.setToken(token);
                     objToken.setLinha(cont);
                     i++;
-                    //verificar final de arquivo?
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == '{') {
@@ -131,7 +127,6 @@ public class ManipuladorAutomato {
                     objToken.setToken(token);
                     objToken.setLinha(cont);
                     i++;
-                    //verificar final de arquivo?
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == '}') {
@@ -140,7 +135,7 @@ public class ManipuladorAutomato {
                     objToken.setToken(token);
                     objToken.setLinha(cont);
                     i++;
-                    //verificar final de arquivo?
+  
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == '(') {
@@ -149,7 +144,7 @@ public class ManipuladorAutomato {
                     objToken.setToken(token);
                     objToken.setLinha(cont);
                     i++;
-                    //verificar final de arquivo?
+
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == ')') {
@@ -158,7 +153,7 @@ public class ManipuladorAutomato {
                     objToken.setToken(token);
                     objToken.setLinha(cont);
                     i++;
-                    //verificar final de arquivo?
+  
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == ',') {
@@ -167,7 +162,7 @@ public class ManipuladorAutomato {
                     objToken.setToken(token);
                     objToken.setLinha(cont);
                     i++;
-                    //verificar final de arquivo?
+
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == ':') {
@@ -176,7 +171,7 @@ public class ManipuladorAutomato {
                     objToken.setToken(token);
                     objToken.setLinha(cont);
                     i++;
-                    //verificar final de arquivo?
+ 
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == ';') {
@@ -185,7 +180,7 @@ public class ManipuladorAutomato {
                     objToken.setToken(token);
                     objToken.setLinha(cont);
                     i++;
-                    //verificar final de arquivo?
+
                     automato(palavra);
                 }
 
