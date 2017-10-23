@@ -78,7 +78,7 @@ public class Parsing {
         tabParsing[61][24] = 39;
         tabParsing[61][37] = 38;
         tabParsing[61][43] = 37;
-        tabParsing[62][18] = 33;
+        tabParsing[62][18] = 32;
         tabParsing[62][35] = 33;
         tabParsing[63][5] = 75;
         tabParsing[63][6] = 75;

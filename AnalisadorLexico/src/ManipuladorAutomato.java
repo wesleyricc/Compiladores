@@ -1,4 +1,7 @@
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,6 +18,25 @@ public class ManipuladorAutomato {
     private String token;
     private gets_sets_Tokens objToken;
     private boolean verifica = false;
+    private ProducoesCodificadas prodCod = new ProducoesCodificadas();
+    private NaoTerminais[] nTerminais;
+    private Integer parsing[][];
+    private Parsing tabParsing;
+    private Stack pilha;
+    Integer x, a;
+    private List<Integer> prod = new ArrayList<>();
+
+    public ManipuladorAutomato() {
+
+        tabParsing = new Parsing();
+        parsing = tabParsing.getParsing();
+        pilha = new Stack();
+        prodCod.IniciarLista();
+        nTerminais = prodCod.getNterminal();
+        pilha.push(44);
+        inicioPilha();
+
+    }
 
     public gets_sets_Tokens getToken(String palavra) {
 
@@ -26,6 +48,87 @@ public class ManipuladorAutomato {
 
         return objToken;
     }
+
+    public void inicioPilha() {
+
+        pilha.push(nTerminais[0].getNaoTerminais());
+
+    }
+
+    public void pilha() {
+
+        //Início
+        //x recebe o topo da pilha
+        x = (Integer) pilha.peek();
+        //a  recebe o símbolo da entrada
+        a = objToken.getCodigo().get(objToken.getCodigo().size() - 1);
+        System.out.println("Token: " + a);
+        //Repita
+        do {
+            //Se X == vazio então
+            if (x == 15) {
+                //Retire o elemento do topo da pilha
+                pilha.pop();
+                //X recebe o topo da pilha
+                x = (Integer) pilha.peek();
+            } //Senão
+            else {
+                //Se x == terminal então
+                if (x < 48) {
+                    //Se x==a então
+                    if (x == a) {
+
+                        //Retire o elemento do topo da pilha
+                        pilha.pop();
+                        //Volta para o Léxico
+                        break;
+                    } //Senão 
+                    else {
+
+                        //Erro. Encerra o programa 
+                        //Falta coisa
+                        System.out.println("Erro");
+                        break;
+                    }
+                } //Senão 
+                else {
+
+                    //e M(X,a) <> null então
+                    if (parsing[x][a] != null) {
+
+                        int pos = parsing[x][a];
+                        //Retire o elemento do topo da pilha 
+                        pilha.pop();
+
+                        prod = nTerminais[pos-1].getProducao();
+                        //Coloque o conteúdo da regra na pilha
+                        for (int i = 0; i < prod.size(); i++) {
+
+                            //Coloquando o conteúdo da regra na pilha
+                            pilha.push(prod.get(i));
+
+                        }
+                            //X recebe o topo da pilha
+                            x = (Integer) pilha.peek();
+
+                    } //Senão
+                    else {
+
+                        //Erro. Encerra o programa
+                        //Falta coisa
+                        System.out.println("Erro2");
+                        break;
+                    }
+
+                }
+
+            }
+
+        } while (x != 44);
+        //Enquanto for diferende do simbolo de final de arquivo
+        
+    }
+
 
     public void automato(String palavra) {
 
@@ -110,6 +213,7 @@ public class ManipuladorAutomato {
                     objToken.setToken(token);
                     objToken.setCodigo(41);
                     objToken.setLinha(cont);
+                    pilha();
                     i++;
                     automato(palavra);
 
@@ -118,6 +222,7 @@ public class ManipuladorAutomato {
                     objToken.setCodigo(39);
                     objToken.setToken(token);
                     objToken.setLinha(cont);
+                    pilha();
                     i++;
                     automato(palavra);
 
@@ -126,6 +231,7 @@ public class ManipuladorAutomato {
                     objToken.setCodigo(36);
                     objToken.setToken(token);
                     objToken.setLinha(cont);
+                    pilha();
                     i++;
                     automato(palavra);
 
@@ -134,8 +240,9 @@ public class ManipuladorAutomato {
                     objToken.setCodigo(35);
                     objToken.setToken(token);
                     objToken.setLinha(cont);
+                    pilha();
                     i++;
-  
+
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == '(') {
@@ -143,6 +250,7 @@ public class ManipuladorAutomato {
                     objToken.setCodigo(43);
                     objToken.setToken(token);
                     objToken.setLinha(cont);
+                    pilha();
                     i++;
 
                     automato(palavra);
@@ -152,8 +260,9 @@ public class ManipuladorAutomato {
                     objToken.setCodigo(42);
                     objToken.setToken(token);
                     objToken.setLinha(cont);
+                    pilha();
                     i++;
-  
+
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == ',') {
@@ -161,6 +270,7 @@ public class ManipuladorAutomato {
                     objToken.setCodigo(40);
                     objToken.setToken(token);
                     objToken.setLinha(cont);
+                    pilha();
                     i++;
 
                     automato(palavra);
@@ -170,8 +280,9 @@ public class ManipuladorAutomato {
                     objToken.setCodigo(38);
                     objToken.setToken(token);
                     objToken.setLinha(cont);
+                    pilha();
                     i++;
- 
+
                     automato(palavra);
 
                 } else if (palavra.charAt(i) == ';') {
@@ -179,6 +290,7 @@ public class ManipuladorAutomato {
                     objToken.setCodigo(37);
                     objToken.setToken(token);
                     objToken.setLinha(cont);
+                    pilha();
                     i++;
 
                     automato(palavra);
@@ -194,6 +306,7 @@ public class ManipuladorAutomato {
                     objToken.setCodigo(44);
                     objToken.setToken(token);
                     objToken.setLinha(cont);
+                    pilha();
                     System.out.println("Fim");
                 }
 
@@ -227,6 +340,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(11);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
             i++;
             automato(palavra);
@@ -242,6 +356,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(45);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             i++;
             automato(palavra);
 
@@ -265,6 +380,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(25);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             i++;
             automato(palavra);
 
@@ -274,6 +390,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(26);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             i++;
             automato(palavra);
 
@@ -282,6 +399,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(27);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             //i++;
 
             automato(palavra);
@@ -297,6 +415,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(31);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             i++;
             automato(palavra);
 
@@ -306,6 +425,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(30);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             i++;
             automato(palavra);
 
@@ -314,6 +434,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(32);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             //i++;
 
             automato(palavra);
@@ -329,6 +450,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(28);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             i++;
             automato(palavra);
 
@@ -337,6 +459,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(29);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             automato(palavra);
         }
 
@@ -350,6 +473,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(46);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             i++;
             automato(palavra);
 
@@ -358,6 +482,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(47);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             automato(palavra);
         }
 
@@ -371,6 +496,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(34);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             i++;
             automato(palavra);
 
@@ -379,6 +505,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(33);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
             automato(palavra);
         }
 
@@ -395,6 +522,7 @@ public class ManipuladorAutomato {
                 objToken.setCodigo(8);
                 objToken.setToken(token);
                 objToken.setLinha(cont);
+                pilha();
 
                 i++;
                 automato(palavra);
@@ -437,6 +565,7 @@ public class ManipuladorAutomato {
                 objToken.setCodigo(9);
                 objToken.setToken(token);
                 objToken.setLinha(contAux);
+                pilha();
 
             } else {
                 objToken.setLinhaErro(cont);
@@ -466,6 +595,7 @@ public class ManipuladorAutomato {
                 objToken.setCodigo(5);
                 objToken.setToken(token);
                 objToken.setLinha(cont);
+                pilha();
             } else {
                 objToken.setLinhaErro(cont);
                 objToken.setErro("Tamanho do Integer maior que o permitido!");
@@ -482,11 +612,12 @@ public class ManipuladorAutomato {
             token += String.valueOf(palavra.charAt(i));
             i++;
         }
-        
+
         if (token.length() < 15) {
             objToken.setCodigo(6);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
         } else {
             objToken.setLinhaErro(cont);
             objToken.setErro("Tamanho do Float maior que o permitido!");
@@ -600,6 +731,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(7);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
         } else {
             objToken.setLinhaErro(cont);
             objToken.setErro("Tamanho máximo da váriavel excedido!");
@@ -617,102 +749,119 @@ public class ManipuladorAutomato {
             objToken.setCodigo(1);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("void")) {
 
             objToken.setCodigo(2);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("string")) {
 
             objToken.setCodigo(3);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("return")) {
 
             objToken.setCodigo(4);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("main")) {
 
             objToken.setCodigo(10);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("integer")) {
 
             objToken.setCodigo(12);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("inicio")) {
 
             objToken.setCodigo(13);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("if")) {
 
             objToken.setCodigo(14);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("for")) {
 
             objToken.setCodigo(16);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("float")) {
 
             objToken.setCodigo(17);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("fim")) {
 
             objToken.setCodigo(18);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("else")) {
 
             objToken.setCodigo(19);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("do")) {
 
             objToken.setCodigo(20);
             objToken.setToken(token);
             objToken.setLinha(cont);
-
+            pilha();
+            
         } else if (token.equals("cout")) {
 
             objToken.setCodigo(21);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("cin")) {
 
             objToken.setCodigo(22);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("char")) {
 
             objToken.setCodigo(23);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else if (token.equals("callfuncao")) {
 
             objToken.setCodigo(24);
             objToken.setToken(token);
             objToken.setLinha(cont);
+            pilha();
 
         } else {
             objToken.setLinhaErro(cont);
@@ -722,11 +871,5 @@ public class ManipuladorAutomato {
         }
 
     }
-   
-    
-    
-     
-    
-    
 
 }
