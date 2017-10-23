@@ -1,5 +1,6 @@
 
 import java.io.File;
+import java.util.Stack;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -51,6 +52,8 @@ public class Principal extends javax.swing.JFrame {
         tabelaToken = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaErros = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        textoPilha = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         arquivoNovo = new javax.swing.JMenuItem();
@@ -100,6 +103,12 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tabelaErros);
 
         painelGuias.addTab("Erros", jScrollPane3);
+
+        textoPilha.setColumns(20);
+        textoPilha.setRows(5);
+        jScrollPane5.setViewportView(textoPilha);
+
+        painelGuias.addTab("Pilha", jScrollPane5);
 
         jMenuBar1.setToolTipText("");
 
@@ -174,14 +183,14 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
-            .addComponent(painelGuias, javax.swing.GroupLayout.DEFAULT_SIZE, 762, Short.MAX_VALUE)
+            .addComponent(painelGuias)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(painelGuias, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                .addComponent(painelGuias, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
         );
 
         pack();
@@ -254,19 +263,21 @@ public class Principal extends javax.swing.JFrame {
 
         setTokenTabela(tokenFinal);
         setTokenTabelaErros(tokenFinal);
+        
+        
 
 
     }//GEN-LAST:event_menuExecutarMouseClicked
 
     private void ajudaSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajudaSobreMouseClicked
 
-        
+
     }//GEN-LAST:event_ajudaSobreMouseClicked
 
     private void ajudaSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajudaSobreActionPerformed
-      
+
         JOptionPane.showMessageDialog(null, "Analisador Léxico v2.1 - 02/10/2017\n\n\nPedro Henrique Bonetti\nWesley Ricardo de Souza");
-        
+
     }//GEN-LAST:event_ajudaSobreActionPerformed
 
     public void setTokenTabela(gets_sets_Tokens t) {
@@ -294,6 +305,8 @@ public class Principal extends javax.swing.JFrame {
         }
 
     }
+
+
 
     /**
      * @param args the command line arguments
@@ -350,11 +363,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenu menuExecutar;
     private javax.swing.JTabbedPane painelGuias;
     private javax.swing.JTable tabelaErros;
     private javax.swing.JTable tabelaToken;
+    private javax.swing.JTextArea textoPilha;
     // End of variables declaration//GEN-END:variables
 }

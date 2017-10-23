@@ -25,7 +25,8 @@ public class ManipuladorAutomato {
     private Stack pilha;
     Integer x, a;
     private List<Integer> prod = new ArrayList<>();
-
+   
+    
     public ManipuladorAutomato() {
 
         tabParsing = new Parsing();
@@ -53,6 +54,8 @@ public class ManipuladorAutomato {
 
         pilha.push(nTerminais[0].getNaoTerminais());
 
+      
+
     }
 
     public void pilha() {
@@ -62,7 +65,7 @@ public class ManipuladorAutomato {
         x = (Integer) pilha.peek();
         //a  recebe o símbolo da entrada
         a = objToken.getCodigo().get(objToken.getCodigo().size() - 1);
-        System.out.println("Token: " + a);
+        
         //Repita
         do {
             //Se X == vazio então
@@ -100,7 +103,7 @@ public class ManipuladorAutomato {
                         //Retire o elemento do topo da pilha 
                         pilha.pop();
 
-                        prod = nTerminais[pos-1].getProducao();
+                        prod = nTerminais[pos - 1].getProducao();
                         //Coloque o conteúdo da regra na pilha
                         for (int i = 0; i < prod.size(); i++) {
 
@@ -108,8 +111,8 @@ public class ManipuladorAutomato {
                             pilha.push(prod.get(i));
 
                         }
-                            //X recebe o topo da pilha
-                            x = (Integer) pilha.peek();
+                        //X recebe o topo da pilha
+                        x = (Integer) pilha.peek();
 
                     } //Senão
                     else {
@@ -126,9 +129,8 @@ public class ManipuladorAutomato {
 
         } while (x != 44);
         //Enquanto for diferende do simbolo de final de arquivo
-        
-    }
 
+    }
 
     public void automato(String palavra) {
 
@@ -368,9 +370,11 @@ public class ManipuladorAutomato {
             objToken.setLinhaErro(cont);
             objToken.setErro("Caracter não incluso na lista de Tokens!");
             i++;
+           
         }
-
+        
     }
+
 
     public void consultaMaior(String palavra) {
 
@@ -834,7 +838,7 @@ public class ManipuladorAutomato {
             objToken.setToken(token);
             objToken.setLinha(cont);
             pilha();
-            
+
         } else if (token.equals("cout")) {
 
             objToken.setCodigo(21);
