@@ -449,7 +449,7 @@ public class ProducoesCodificadas {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(70);
         nterminal[i].setProducao(5);
-        nterminal[i].setProducao(30);
+        nterminal[i].setProducao(33);
         i++;
         //66
         nterminal[i] = new NaoTerminais();

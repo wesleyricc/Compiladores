@@ -19,8 +19,36 @@ public class gets_sets_Tokens {
     private final List<String> listtoken = new ArrayList<>();
     private final List<Integer> erro_linha = new ArrayList<>();
     private final List<String> erro_desc = new ArrayList<>();
+    private final List<String> pilha = new ArrayList<>();
+    private final List<String> erro_pilha = new ArrayList<>();
+    private final List<Integer> x = new ArrayList<>();
+    private final List<Integer> a = new ArrayList<>();
 
+    public List<Integer> getX() {
+        return x;
+    }
+
+    public List<Integer> getA() {
+        return a;
+    }
     
+     public void setX(Integer x) {
+        this.x.add(x);
+    }
+
+    public void setA(Integer a) {
+         this.a.add(a);
+    }
+    
+
+    public List<String> getPilha() {
+        return pilha;
+    }
+
+    public void setPilha(String pilha) {
+        this.pilha.add(pilha);
+    }
+
     public List<Integer> getCodigo() {
         return listcod;
     }

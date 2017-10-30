@@ -52,8 +52,8 @@ public class Principal extends javax.swing.JFrame {
         tabelaToken = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaErros = new javax.swing.JTable();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        textoPilha = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tabelaPilhaToken = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         arquivoNovo = new javax.swing.JMenuItem();
@@ -104,11 +104,17 @@ public class Principal extends javax.swing.JFrame {
 
         painelGuias.addTab("Erros", jScrollPane3);
 
-        textoPilha.setColumns(20);
-        textoPilha.setRows(5);
-        jScrollPane5.setViewportView(textoPilha);
+        tabelaPilhaToken.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null}
+            },
+            new String [] {
+                "X", "a", "Pilha"
+            }
+        ));
+        jScrollPane4.setViewportView(tabelaPilhaToken);
 
-        painelGuias.addTab("Pilha", jScrollPane5);
+        painelGuias.addTab("Pilha", jScrollPane4);
 
         jMenuBar1.setToolTipText("");
 
@@ -263,8 +269,7 @@ public class Principal extends javax.swing.JFrame {
 
         setTokenTabela(tokenFinal);
         setTokenTabelaErros(tokenFinal);
-        
-        
+        setTabelaPilha(tokenFinal);
 
 
     }//GEN-LAST:event_menuExecutarMouseClicked
@@ -299,14 +304,29 @@ public class Principal extends javax.swing.JFrame {
 
         modeloTokErro.setNumRows(0);
 
-        for (int i = 0; i < t.getErro_linha().size(); i++) {
 
-            modeloTokErro.addRow(new Object[]{t.getErro_linha().get(i), t.getErro_desc().get(i)});
+            for (int i = 0; i < t.getErro_desc().size(); i++) {
+
+                modeloTokErro.addRow(new Object[]{t.getErro_linha().get(i), t.getErro_desc().get(i)});
+
+            }
+        }
+
+    
+    public void setTabelaPilha(gets_sets_Tokens t) {
+
+        DefaultTableModel modeloPilha = (DefaultTableModel) tabelaPilhaToken.getModel();
+
+        modeloPilha.setNumRows(0);
+
+        
+        for (int i = 0; i < t.getX().size(); i++) {
+
+            modeloPilha.addRow(new Object[]{t.getX().get(i), t.getA().get(i), t.getPilha().get(i)});
+
         }
 
     }
-
-
 
     /**
      * @param args the command line arguments
@@ -363,13 +383,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenu menuExecutar;
     private javax.swing.JTabbedPane painelGuias;
     private javax.swing.JTable tabelaErros;
+    private javax.swing.JTable tabelaPilhaToken;
     private javax.swing.JTable tabelaToken;
-    private javax.swing.JTextArea textoPilha;
     // End of variables declaration//GEN-END:variables
 }

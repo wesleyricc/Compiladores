@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Stack;
 
 /*
@@ -17,7 +18,7 @@ public class ManipuladorAutomato {
     private int i, cont, contAux;
     private String token;
     private gets_sets_Tokens objToken;
-    private boolean verifica = false;
+    private boolean verifica = false, confereErro = false;
     private ProducoesCodificadas prodCod = new ProducoesCodificadas();
     private NaoTerminais[] nTerminais;
     private Integer parsing[][];
@@ -25,8 +26,7 @@ public class ManipuladorAutomato {
     private Stack pilha;
     Integer x, a;
     private List<Integer> prod = new ArrayList<>();
-   
-    
+
     public ManipuladorAutomato() {
 
         tabParsing = new Parsing();
@@ -34,287 +34,295 @@ public class ManipuladorAutomato {
         pilha = new Stack();
         prodCod.IniciarLista();
         nTerminais = prodCod.getNterminal();
-        pilha.push(44);
-        inicioPilha();
+        confereErro = false;
+
+    }
+
+    public void verificaSintatico() {
+
+        x = (Integer) pilha.peek();
+
+        if (objToken.getCodigo().size() > 0) {
+            a = objToken.getCodigo().get(objToken.getCodigo().size() - 1);
+
+        } else {
+            return;
+        }
+
+        objToken.setA(a);
+        objToken.setX(x);
+        objToken.setPilha(pilha.toString());
+
+        do {
+
+            if (x == 15) {
+                pilha.pop();
+                objToken.setA(a);
+                objToken.setX(x);
+                objToken.setPilha(pilha.toString());
+                x = (Integer) pilha.peek();
+
+            } else {
+                if (x < 48) {
+                    if (Objects.equals(x, a)) {
+
+                        pilha.pop();
+                        objToken.setA(a);
+                        objToken.setX(x);
+                        objToken.setPilha(pilha.toString());
+                        break;
+
+                    } else {
+
+                        objToken.setLinhaErro(cont);
+                        objToken.setErro("Erro Sintático!");
+                        confereErro = true;
+                        break;   //erro
+                    }
+                } else {
+
+                    if (parsing[x][a] != null) {
+
+                        int pos = parsing[x][a];
+
+                        pilha.pop();
+                        //objToken.setPilha(pilha.toString());
+
+                        prod = nTerminais[pos - 1].getProducao();
+
+                        for (int i = 0; i < prod.size(); i++) {
+
+                            pilha.push(prod.get(i));
+
+                        }
+
+                        x = (Integer) pilha.peek();
+
+                        objToken.setA(a);
+                        objToken.setX(x);
+                        objToken.setPilha(pilha.toString());
+
+                    } else {
+
+                        objToken.setLinhaErro(cont);
+                        objToken.setErro("Inexistente em Parsing!");
+                        confereErro = true;
+
+                        System.out.println("Erro!");
+                        break;   //erro
+                    }
+                }
+            }
+        } while (x != 44);
 
     }
 
     public gets_sets_Tokens getToken(String palavra) {
 
+        pilha.clear();
+        pilha.push(44);
+        pilha.push(48);
+
         i = 0;
         cont = 1;
         verifica = false;
+        confereErro = false;
         objToken = new gets_sets_Tokens();
+
         automato(palavra);
 
         return objToken;
     }
 
-    public void inicioPilha() {
-
-        pilha.push(nTerminais[0].getNaoTerminais());
-
-      
-
-    }
-
-    public void pilha() {
-
-        //Início
-        //x recebe o topo da pilha
-        x = (Integer) pilha.peek();
-        //a  recebe o símbolo da entrada
-        a = objToken.getCodigo().get(objToken.getCodigo().size() - 1);
-        
-        //Repita
-        do {
-            //Se X == vazio então
-            if (x == 15) {
-                //Retire o elemento do topo da pilha
-                pilha.pop();
-                //X recebe o topo da pilha
-                x = (Integer) pilha.peek();
-            } //Senão
-            else {
-                //Se x == terminal então
-                if (x < 48) {
-                    //Se x==a então
-                    if (x == a) {
-
-                        //Retire o elemento do topo da pilha
-                        pilha.pop();
-                        //Volta para o Léxico
-                        break;
-                    } //Senão 
-                    else {
-
-                        //Erro. Encerra o programa 
-                        //Falta coisa
-                        System.out.println("Erro");
-                        break;
-                    }
-                } //Senão 
-                else {
-
-                    //e M(X,a) <> null então
-                    if (parsing[x][a] != null) {
-
-                        int pos = parsing[x][a];
-                        //Retire o elemento do topo da pilha 
-                        pilha.pop();
-
-                        prod = nTerminais[pos - 1].getProducao();
-                        //Coloque o conteúdo da regra na pilha
-                        for (int i = 0; i < prod.size(); i++) {
-
-                            //Coloquando o conteúdo da regra na pilha
-                            pilha.push(prod.get(i));
-
-                        }
-                        //X recebe o topo da pilha
-                        x = (Integer) pilha.peek();
-
-                    } //Senão
-                    else {
-
-                        //Erro. Encerra o programa
-                        //Falta coisa
-                        System.out.println("Erro2");
-                        break;
-                    }
-
-                }
-
-            }
-
-        } while (x != 44);
-        //Enquanto for diferende do simbolo de final de arquivo
-
-    }
-
     public void automato(String palavra) {
 
-        if (token != "$") {
-            token = "";
-            token += String.valueOf(palavra.charAt(i));
+        if (!confereErro) {
+            if (token != "$") {
+                token = "";
+                token += String.valueOf(palavra.charAt(i));
 
-            if (palavra.charAt(i) == ' ') {
-                i++;
-                automato(palavra);
-
-            } else if (palavra.charAt(i) == '\n') {
-                cont++;
-                i++;
-                automato(palavra);
-
-            } else if (palavra.charAt(i) == '\t') {
-                i++;
-                automato(palavra);
-
-            } else if (palavra.charAt(i) != '$') {
-
-                if (palavra.charAt(i) == '@') {
+                if (palavra.charAt(i) == ' ') {
                     i++;
-                    consultaVariavel(palavra);  //variaveis
-                } else if (Character.isLetter(palavra.charAt(i))) {
-                    i++;
-                    consultaReservada(palavra);  //palavras reservadas
+                    automato(palavra);
 
-                } else if (palavra.charAt(i) == '#') {
+                } else if (palavra.charAt(i) == '\n') {
+                    cont++;
                     i++;
+                    automato(palavra);
 
-                    if (palavra.charAt(i) == '#') {
+                } else if (palavra.charAt(i) == '\t') {
+                    i++;
+                    automato(palavra);
+
+                } else if (palavra.charAt(i) != '$') {
+
+                    if (palavra.charAt(i) == '@') {
                         i++;
-                        comentarioBloco(palavra);  //comentarios
-                    } else {
-                        comentarioLinha(palavra);
+                        consultaVariavel(palavra);  //variaveis
+                    } else if (Character.isLetter(palavra.charAt(i))) {
+                        i++;
+                        consultaReservada(palavra);  //palavras reservadas
+
+                    } else if (palavra.charAt(i) == '#') {
+                        i++;
+
+                        if (palavra.charAt(i) == '#') {
+                            i++;
+                            comentarioBloco(palavra);  //comentarios
+                        } else {
+                            comentarioLinha(palavra);
+                        }
+
+                    } else if (Character.isDigit(palavra.charAt(i))) {
+                        i++;
+                        consultaDigito(palavra); //inteiro e float
+
+                    } else if (palavra.charAt(i) == '"') {
+                        i++;
+                        token = "";
+                        contAux = cont;
+                        consultaAspasDuplas(palavra);
+
+                    } else if (String.valueOf(palavra.charAt(i)).equals("'")) {
+                        token = "";
+                        contAux = cont;
+                        i++;
+                        consultaAspas(palavra);
+
+                    } else if (palavra.charAt(i) == '=') {
+                        i++;
+                        consultaIgual(palavra);
+
+                    } else if (palavra.charAt(i) == '+') {
+                        i++;
+                        consultaMais(palavra);
+
+                    } else if (palavra.charAt(i) == '-') {
+                        i++;
+                        consultaMenos(palavra);
+
+                    } else if (palavra.charAt(i) == '>') {
+                        i++;
+                        consultaMaior(palavra);
+
+                    } else if (palavra.charAt(i) == '<') {
+                        i++;
+                        consultaMenor(palavra);
+
+                    } else if (palavra.charAt(i) == '!') {
+                        i++;
+                        consultaExclamacao(palavra);
+
+                    } else if (palavra.charAt(i) == '*') {
+
+                        objToken.setToken(token);
+                        objToken.setCodigo(41);
+                        objToken.setLinha(cont);
+                        verificaSintatico();
+                        i++;
+                        automato(palavra);
+
+                    } else if (palavra.charAt(i) == '/') {
+
+                        objToken.setCodigo(39);
+                        objToken.setToken(token);
+                        objToken.setLinha(cont);
+                        verificaSintatico();
+                        i++;
+                        automato(palavra);
+
+                    } else if (palavra.charAt(i) == '{') {
+
+                        objToken.setCodigo(36);
+                        objToken.setToken(token);
+                        objToken.setLinha(cont);
+                        verificaSintatico();
+                        i++;
+                        automato(palavra);
+
+                    } else if (palavra.charAt(i) == '}') {
+
+                        objToken.setCodigo(35);
+                        objToken.setToken(token);
+                        objToken.setLinha(cont);
+                        verificaSintatico();
+                        i++;
+
+                        automato(palavra);
+
+                    } else if (palavra.charAt(i) == '(') {
+
+                        objToken.setCodigo(43);
+                        objToken.setToken(token);
+                        objToken.setLinha(cont);
+                        verificaSintatico();
+                        i++;
+
+                        automato(palavra);
+
+                    } else if (palavra.charAt(i) == ')') {
+
+                        objToken.setCodigo(42);
+                        objToken.setToken(token);
+                        objToken.setLinha(cont);
+                        verificaSintatico();
+                        i++;
+
+                        automato(palavra);
+
+                    } else if (palavra.charAt(i) == ',') {
+
+                        objToken.setCodigo(40);
+                        objToken.setToken(token);
+                        objToken.setLinha(cont);
+                        verificaSintatico();
+                        i++;
+
+                        automato(palavra);
+
+                    } else if (palavra.charAt(i) == ':') {
+
+                        objToken.setCodigo(38);
+                        objToken.setToken(token);
+                        objToken.setLinha(cont);
+                        verificaSintatico();
+                        i++;
+
+                        automato(palavra);
+
+                    } else if (palavra.charAt(i) == ';') {
+
+                        objToken.setCodigo(37);
+                        objToken.setToken(token);
+                        objToken.setLinha(cont);
+                        verificaSintatico();
+                        i++;
+
+                        automato(palavra);
                     }
 
-                } else if (Character.isDigit(palavra.charAt(i))) {
-                    i++;
-                    consultaDigito(palavra); //inteiro e float
-
-                } else if (palavra.charAt(i) == '"') {
-                    i++;
-                    token = "";
-                    contAux = cont;
-                    consultaAspasDuplas(palavra);
-
-                } else if (String.valueOf(palavra.charAt(i)).equals("'")) {
-                    token = "";
-                    contAux = cont;
-                    i++;
-                    consultaAspas(palavra);
-
-                } else if (palavra.charAt(i) == '=') {
-                    i++;
-                    consultaIgual(palavra);
-
-                } else if (palavra.charAt(i) == '+') {
-                    i++;
-                    consultaMais(palavra);
-
-                } else if (palavra.charAt(i) == '-') {
-                    i++;
-                    consultaMenos(palavra);
-
-                } else if (palavra.charAt(i) == '>') {
-                    i++;
-                    consultaMaior(palavra);
-
-                } else if (palavra.charAt(i) == '<') {
-                    i++;
-                    consultaMenor(palavra);
-
-                } else if (palavra.charAt(i) == '!') {
-                    i++;
-                    consultaExclamacao(palavra);
-
-                } else if (palavra.charAt(i) == '*') {
-
-                    objToken.setToken(token);
-                    objToken.setCodigo(41);
-                    objToken.setLinha(cont);
-                    pilha();
-                    i++;
-                    automato(palavra);
-
-                } else if (palavra.charAt(i) == '/') {
-
-                    objToken.setCodigo(39);
-                    objToken.setToken(token);
-                    objToken.setLinha(cont);
-                    pilha();
-                    i++;
-                    automato(palavra);
-
-                } else if (palavra.charAt(i) == '{') {
-
-                    objToken.setCodigo(36);
-                    objToken.setToken(token);
-                    objToken.setLinha(cont);
-                    pilha();
-                    i++;
-                    automato(palavra);
-
-                } else if (palavra.charAt(i) == '}') {
-
-                    objToken.setCodigo(35);
-                    objToken.setToken(token);
-                    objToken.setLinha(cont);
-                    pilha();
-                    i++;
-
-                    automato(palavra);
-
-                } else if (palavra.charAt(i) == '(') {
-
-                    objToken.setCodigo(43);
-                    objToken.setToken(token);
-                    objToken.setLinha(cont);
-                    pilha();
-                    i++;
-
-                    automato(palavra);
-
-                } else if (palavra.charAt(i) == ')') {
-
-                    objToken.setCodigo(42);
-                    objToken.setToken(token);
-                    objToken.setLinha(cont);
-                    pilha();
-                    i++;
-
-                    automato(palavra);
-
-                } else if (palavra.charAt(i) == ',') {
-
-                    objToken.setCodigo(40);
-                    objToken.setToken(token);
-                    objToken.setLinha(cont);
-                    pilha();
-                    i++;
-
-                    automato(palavra);
-
-                } else if (palavra.charAt(i) == ':') {
-
-                    objToken.setCodigo(38);
-                    objToken.setToken(token);
-                    objToken.setLinha(cont);
-                    pilha();
-                    i++;
-
-                    automato(palavra);
-
-                } else if (palavra.charAt(i) == ';') {
-
-                    objToken.setCodigo(37);
-                    objToken.setToken(token);
-                    objToken.setLinha(cont);
-                    pilha();
-                    i++;
-
-                    automato(palavra);
-                }
-
-            } else {
-
-                if (verifica) {
-
                 } else {
-                    verifica = true;
 
-                    objToken.setCodigo(44);
-                    objToken.setToken(token);
-                    objToken.setLinha(cont);
-                    pilha();
-                    System.out.println("Fim");
+                    if (verifica) {
+
+                    } else {
+                        verifica = true;
+
+                        objToken.setCodigo(44);
+                        objToken.setToken(token);
+                        objToken.setLinha(cont);
+                        //verificaSintatico();
+                        System.out.println("Fim");
+                    }
+
                 }
 
             }
+        } else {
+            return;
         }
     }
+
 
     public void consultaLiteral(String palavra) {
 
@@ -342,7 +350,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(11);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
             i++;
             automato(palavra);
@@ -358,7 +366,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(45);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             i++;
             automato(palavra);
 
@@ -370,11 +378,10 @@ public class ManipuladorAutomato {
             objToken.setLinhaErro(cont);
             objToken.setErro("Caracter não incluso na lista de Tokens!");
             i++;
-           
-        }
-        
-    }
 
+        }
+
+    }
 
     public void consultaMaior(String palavra) {
 
@@ -384,7 +391,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(25);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             i++;
             automato(palavra);
 
@@ -394,7 +401,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(26);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             i++;
             automato(palavra);
 
@@ -403,7 +410,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(27);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             //i++;
 
             automato(palavra);
@@ -419,7 +426,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(31);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             i++;
             automato(palavra);
 
@@ -429,7 +436,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(30);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             i++;
             automato(palavra);
 
@@ -438,7 +445,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(32);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             //i++;
 
             automato(palavra);
@@ -454,7 +461,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(28);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             i++;
             automato(palavra);
 
@@ -463,7 +470,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(29);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             automato(palavra);
         }
 
@@ -477,7 +484,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(46);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             i++;
             automato(palavra);
 
@@ -486,7 +493,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(47);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             automato(palavra);
         }
 
@@ -497,19 +504,19 @@ public class ManipuladorAutomato {
         if (palavra.charAt(i) == '+') {
 
             token += String.valueOf(palavra.charAt(i));
-            objToken.setCodigo(34);
+            objToken.setCodigo(33);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             i++;
             automato(palavra);
 
         } else {
 
-            objToken.setCodigo(33);
+            objToken.setCodigo(34);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
             automato(palavra);
         }
 
@@ -526,7 +533,7 @@ public class ManipuladorAutomato {
                 objToken.setCodigo(8);
                 objToken.setToken(token);
                 objToken.setLinha(cont);
-                pilha();
+                verificaSintatico();
 
                 i++;
                 automato(palavra);
@@ -569,7 +576,7 @@ public class ManipuladorAutomato {
                 objToken.setCodigo(9);
                 objToken.setToken(token);
                 objToken.setLinha(contAux);
-                pilha();
+                verificaSintatico();
 
             } else {
                 objToken.setLinhaErro(cont);
@@ -599,7 +606,7 @@ public class ManipuladorAutomato {
                 objToken.setCodigo(5);
                 objToken.setToken(token);
                 objToken.setLinha(cont);
-                pilha();
+                verificaSintatico();
             } else {
                 objToken.setLinhaErro(cont);
                 objToken.setErro("Tamanho do Integer maior que o permitido!");
@@ -621,7 +628,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(6);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
         } else {
             objToken.setLinhaErro(cont);
             objToken.setErro("Tamanho do Float maior que o permitido!");
@@ -735,7 +742,7 @@ public class ManipuladorAutomato {
             objToken.setCodigo(7);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
         } else {
             objToken.setLinhaErro(cont);
             objToken.setErro("Tamanho máximo da váriavel excedido!");
@@ -753,119 +760,119 @@ public class ManipuladorAutomato {
             objToken.setCodigo(1);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("void")) {
 
             objToken.setCodigo(2);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("string")) {
 
             objToken.setCodigo(3);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("return")) {
 
             objToken.setCodigo(4);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("main")) {
 
             objToken.setCodigo(10);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("integer")) {
 
             objToken.setCodigo(12);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("inicio")) {
 
             objToken.setCodigo(13);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("if")) {
 
             objToken.setCodigo(14);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("for")) {
 
             objToken.setCodigo(16);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("float")) {
 
             objToken.setCodigo(17);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("fim")) {
 
             objToken.setCodigo(18);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("else")) {
 
             objToken.setCodigo(19);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("do")) {
 
             objToken.setCodigo(20);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("cout")) {
 
             objToken.setCodigo(21);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("cin")) {
 
             objToken.setCodigo(22);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("char")) {
 
             objToken.setCodigo(23);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else if (token.equals("callfuncao")) {
 
             objToken.setCodigo(24);
             objToken.setToken(token);
             objToken.setLinha(cont);
-            pilha();
+            verificaSintatico();
 
         } else {
             objToken.setLinhaErro(cont);
