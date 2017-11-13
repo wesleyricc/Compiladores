@@ -301,24 +301,35 @@ public class ManipuladorAutomato {
                         automato(palavra);
                     }
 
-                } else {
+                } else{
+                        objToken.setCodigo(44);
+                        objToken.setToken(token);
+                        objToken.setLinha(cont);
+                        verificaSintatico();
+    
+                    }
+                
+                
+                /*else {
 
                     if (verifica) {
-
+                        
+                        
                     } else {
                         verifica = true;
 
                         objToken.setCodigo(44);
                         objToken.setToken(token);
                         objToken.setLinha(cont);
-                        //verificaSintatico();
+                        verificaSintatico();
                         System.out.println("Fim");
                     }
-
-                }
-
+                }*/
             }
+                
+                      
         } else {
+            
             return;
         }
     }
