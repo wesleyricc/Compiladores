@@ -40,9 +40,11 @@ public class ProducoesCodificadas {
         nterminal[i].setNaoTerminais(49);
         nterminal[i].setProducao(54);
         nterminal[i].setProducao(37);
+        nterminal[i].setProducao(101);
         nterminal[i].setProducao(53);
         nterminal[i].setProducao(38);
         nterminal[i].setProducao(52);
+        nterminal[i].setProducao(100);
         nterminal[i].setProducao(7);
         i++;
         // 3
@@ -59,27 +61,32 @@ public class ProducoesCodificadas {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(52);
         nterminal[i].setProducao(52);
+        nterminal[i].setProducao(100);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(40);
         i++;
         //6
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(53);
+        nterminal[i].setProducao(107);
         nterminal[i].setProducao(12);
         i++;
         //7
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(53);
+        nterminal[i].setProducao(107);
         nterminal[i].setProducao(17);
         i++;
         //8
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(53);
+        nterminal[i].setProducao(107);
         nterminal[i].setProducao(3);
         i++;
         //9
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(53);
+        nterminal[i].setProducao(107);
         nterminal[i].setProducao(23);
         i++;
         //10
@@ -92,6 +99,7 @@ public class ProducoesCodificadas {
         nterminal[i].setNaoTerminais(54);
         nterminal[i].setProducao(54);
         nterminal[i].setProducao(37);
+        nterminal[i].setProducao(101);
         nterminal[i].setProducao(53);
         nterminal[i].setProducao(38);
         nterminal[i].setProducao(55);
@@ -100,6 +108,7 @@ public class ProducoesCodificadas {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(55);
         nterminal[i].setProducao(52);
+        nterminal[i].setProducao(100);
         nterminal[i].setProducao(7);
         i++;
         //13
@@ -116,6 +125,7 @@ public class ProducoesCodificadas {
         nterminal[i].setProducao(49);
         nterminal[i].setProducao(36);
         nterminal[i].setProducao(57);
+        nterminal[i].setProducao(102);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(56);
         i++;
@@ -152,26 +162,31 @@ public class ProducoesCodificadas {
         //20
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(58);
+        nterminal[i].setProducao(108);
         nterminal[i].setProducao(5);
         i++;
         //21
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(58);
+        nterminal[i].setProducao(108);
         nterminal[i].setProducao(6);
         i++;
         //22
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(58);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         i++;
         //23
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(58);
+        nterminal[i].setProducao(108);
         nterminal[i].setProducao(8);
         i++;
         //24
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(58);
+        nterminal[i].setProducao(108);
         nterminal[i].setProducao(9);
         i++;
         //25
@@ -235,6 +250,7 @@ public class ProducoesCodificadas {
         nterminal[i].setNaoTerminais(61);
         nterminal[i].setProducao(63);
         nterminal[i].setProducao(29);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         i++;
         //35
@@ -267,6 +283,7 @@ public class ProducoesCodificadas {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(61);
         nterminal[i].setProducao(64);
+        nterminal[i].setProducao(104);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(24);
         i++;
@@ -298,26 +315,32 @@ public class ProducoesCodificadas {
         //44
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(65);
+        nterminal[i].setProducao(106);
         nterminal[i].setProducao(5);
         i++;
         //45
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(65);
+        nterminal[i].setProducao(106);
         nterminal[i].setProducao(9);
         i++;
         //46
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(65);
+        nterminal[i].setProducao(106);
         nterminal[i].setProducao(6);
         i++;
         //47
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(65);
+        nterminal[i].setProducao(106);
         nterminal[i].setProducao(8);
         i++;
         //48
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(65);
+        nterminal[i].setProducao(106);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         i++;
         //49
@@ -331,6 +354,7 @@ public class ProducoesCodificadas {
         nterminal[i].setProducao(36);
         nterminal[i].setProducao(42);
         nterminal[i].setProducao(67);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(43);
         nterminal[i].setProducao(14);
@@ -360,6 +384,7 @@ public class ProducoesCodificadas {
         nterminal[i].setProducao(36);
         nterminal[i].setProducao(42);
         nterminal[i].setProducao(67);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(43);
         nterminal[i].setProducao(1);
@@ -403,26 +428,32 @@ public class ProducoesCodificadas {
         //59
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(69);
+        nterminal[i].setProducao(105);
         nterminal[i].setProducao(5);
         i++;
         //60
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(69);
+        nterminal[i].setProducao(105);
         nterminal[i].setProducao(6);
         i++;
         //61
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(69);
+        nterminal[i].setProducao(105);
         nterminal[i].setProducao(9);
         i++;
         //62
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(69);
+        nterminal[i].setProducao(105);
         nterminal[i].setProducao(8);
         i++;
         //63
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(69);
+        nterminal[i].setProducao(103);
+        nterminal[i].setProducao(105);
         nterminal[i].setProducao(7);
         i++;
         //64
@@ -437,10 +468,12 @@ public class ProducoesCodificadas {
         nterminal[i].setProducao(70);
         nterminal[i].setProducao(37);
         nterminal[i].setProducao(67);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(37);
         nterminal[i].setProducao(69);
         nterminal[i].setProducao(29);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(43);
         nterminal[i].setProducao(16);
@@ -462,6 +495,7 @@ public class ProducoesCodificadas {
         nterminal[i].setNaoTerminais(61);
         nterminal[i].setProducao(42);
         nterminal[i].setProducao(67);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(43);
         nterminal[i].setProducao(1);
@@ -475,6 +509,7 @@ public class ProducoesCodificadas {
         //68
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(61);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(25);
         nterminal[i].setProducao(22);
@@ -497,6 +532,7 @@ public class ProducoesCodificadas {
         nterminal[i].setNaoTerminais(71);
         nterminal[i].setProducao(71);
         nterminal[i].setProducao(72);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(31);
         i++;
@@ -516,6 +552,7 @@ public class ProducoesCodificadas {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(72);
         nterminal[i].setProducao(72);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(40);
         i++;
@@ -523,12 +560,14 @@ public class ProducoesCodificadas {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(63);
         nterminal[i].setProducao(74);
+        nterminal[i].setProducao(108);
         nterminal[i].setProducao(73);
         i++;
         //76
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(63);
         nterminal[i].setProducao(64);
+        nterminal[i].setProducao(104);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(24);
         i++;
@@ -579,26 +618,31 @@ public class ProducoesCodificadas {
         //84
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(75);
+        nterminal[i].setProducao(105);
         nterminal[i].setProducao(5);
         i++;
         //85
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(75);
+        nterminal[i].setProducao(105);
         nterminal[i].setProducao(6);
         i++;
         //86
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(75);
+        nterminal[i].setProducao(103);
         nterminal[i].setProducao(7);
         i++;
         //87
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(75);
+        nterminal[i].setProducao(105);
         nterminal[i].setProducao(9);
         i++;
         //88
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(75);
+        nterminal[i].setProducao(105);
         nterminal[i].setProducao(8);
         i++;
         //89

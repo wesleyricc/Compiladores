@@ -281,7 +281,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void ajudaSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajudaSobreActionPerformed
 
-        JOptionPane.showMessageDialog(null, "Analisador Léxico v2.1 - 02/10/2017\n\n\nPedro Henrique Bonetti\nWesley Ricardo de Souza");
+        JOptionPane.showMessageDialog(null, "Analisador Léxico v4.2b - 02/10/2017\n\n\nPedro Henrique Bonetti\nWesley Ricardo de Souza");
 
     }//GEN-LAST:event_ajudaSobreActionPerformed
 

@@ -24,6 +24,7 @@ public class ManipuladorAutomato {
     private Integer parsing[][];
     private Parsing tabParsing;
     private Stack pilha;
+    private Semantico semantico;
     Integer x, a;
     private List<Integer> prod = new ArrayList<>();
 
@@ -36,6 +37,52 @@ public class ManipuladorAutomato {
         nTerminais = prodCod.getNterminal();
         confereErro = false;
 
+    }
+
+    public void inserirVar(Integer x) {
+
+        semantico.setNome(token);
+        semantico.setCategoria("Variavel");
+    }
+
+    public void inserirFunc(Integer x) {
+
+        semantico.setNome(token);
+        semantico.setCategoria("Função");
+    }
+
+    public void consultaVar(Integer x) {
+
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getCategoria().get(i).equals("Variavel")) {
+                if (semantico.getNome().get(i).equals(token)) {
+
+                    objToken.setErro("Variavel já declarada!");
+                    objToken.setLinhaErro(cont);
+                    return;
+                }
+
+            }
+        }
+        inserirVar(x);
+    }
+
+    public void consultaFunc(Integer x) {
+
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getCategoria().get(i).equals("Função")) {
+                if (semantico.getNome().get(i).equals(token)) {
+
+                    objToken.setErro("Função já declarada!");
+                    objToken.setLinhaErro(cont);
+                    return;
+                }
+
+            }
+        }
+        inserirFunc(x);
     }
 
     public void verificaSintatico() {
@@ -115,6 +162,25 @@ public class ManipuladorAutomato {
             }
         } while (x != 44);
 
+        while (!pilha.isEmpty() && 99 < (Integer) pilha.peek()) {
+            if (null != (Integer) pilha.peek()) {
+                switch ((Integer) pilha.peek()) {
+                    case 100:
+                        consultaVar(x);
+                        break;
+
+                    case 102:
+                        consultaFunc(x);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            pilha.pop();
+
+        }
+
     }
 
     public gets_sets_Tokens getToken(String palavra) {
@@ -128,6 +194,7 @@ public class ManipuladorAutomato {
         verifica = false;
         confereErro = false;
         objToken = new gets_sets_Tokens();
+        semantico = new Semantico();
 
         automato(palavra);
 
@@ -301,15 +368,14 @@ public class ManipuladorAutomato {
                         automato(palavra);
                     }
 
-                } else{
-                        objToken.setCodigo(44);
-                        objToken.setToken(token);
-                        objToken.setLinha(cont);
-                        verificaSintatico();
-    
-                    }
-                
-                
+                } else {
+                    objToken.setCodigo(44);
+                    objToken.setToken(token);
+                    objToken.setLinha(cont);
+                    verificaSintatico();
+
+                }
+
                 /*else {
 
                     if (verifica) {
@@ -326,14 +392,12 @@ public class ManipuladorAutomato {
                     }
                 }*/
             }
-                
-                      
+
         } else {
-            
+
             return;
         }
     }
-
 
     public void consultaLiteral(String palavra) {
 
