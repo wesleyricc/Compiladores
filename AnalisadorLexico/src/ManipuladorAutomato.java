@@ -39,6 +39,15 @@ public class ManipuladorAutomato {
 
     }
 
+     public void insereTipo() {
+
+        for (int i = semantico.getTipo().size(); i < semantico.getNome().size(); i++) {
+
+            semantico.setTipo(token);
+
+        }
+    }
+    
     public void inserirVar(Integer x) {
 
         semantico.setNome(token);
@@ -171,6 +180,10 @@ public class ManipuladorAutomato {
 
                     case 102:
                         consultaFunc(x);
+                        break;
+
+                    case 101:
+                        insereTipo();
                         break;
 
                     default:
