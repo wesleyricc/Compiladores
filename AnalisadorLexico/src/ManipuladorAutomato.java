@@ -39,7 +39,7 @@ public class ManipuladorAutomato {
 
     }
 
-     public void insereTipo() {
+    public void insereTipo() {
 
         for (int i = semantico.getTipo().size(); i < semantico.getNome().size(); i++) {
 
@@ -47,7 +47,7 @@ public class ManipuladorAutomato {
 
         }
     }
-    
+
     public void inserirVar(Integer x) {
 
         semantico.setNome(token);
@@ -93,6 +93,47 @@ public class ManipuladorAutomato {
         }
         inserirFunc(x);
     }
+
+    public void consultaDecVar() {
+
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getCategoria().get(i).equals("Variavel")) {
+
+                if (semantico.getNome().get(i).equals(token)) {
+
+                    return;
+
+                }
+            }
+
+        }
+        
+        objToken.setErro("Variável não declarada!");
+        objToken.setLinhaErro(cont);
+
+    }
+    
+    public void consultaDecFunc() {
+
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getCategoria().get(i).equals("Função")) {
+
+                if (semantico.getNome().get(i).equals(token)) {
+
+                    return;
+
+                }
+            }
+
+        }
+        
+        objToken.setErro("Função não declarada!");
+        objToken.setLinhaErro(cont);
+
+    }
+    
 
     public void verificaSintatico() {
 
@@ -184,6 +225,14 @@ public class ManipuladorAutomato {
 
                     case 101:
                         insereTipo();
+                        break;
+
+                    case 103:
+                        consultaDecVar();
+                        break;
+                        
+                        case 104:
+                        consultaDecFunc();
                         break;
 
                     default:
