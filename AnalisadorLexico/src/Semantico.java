@@ -15,9 +15,34 @@ import java.util.List;
 public class Semantico {
 
     private List<String> nome = new ArrayList<>();
+    private List<String> nomeFuncaoRecebe = new ArrayList<>();
+    private List<String> ParamFuncaoRecebe = new ArrayList<>();
     private List<String> categoria = new ArrayList<>();
     private List<String> tipo = new ArrayList<>();
     private List<String> nivel = new ArrayList<>();
+
+    
+    
+    public List<String> getNomeFuncaoRecebe() {
+        return nomeFuncaoRecebe;
+    }
+
+    public void setNomeFuncaoRecebe(String nomeFuncaoRecebe) {
+        this.nomeFuncaoRecebe.add(nomeFuncaoRecebe);
+    }
+
+    public void setParamFuncaoRecebe(List<String> ParamFuncaoRecebe) {
+        this.ParamFuncaoRecebe = ParamFuncaoRecebe;
+    }
+
+    public List<String> getParamFuncaoRecebe() {
+        return ParamFuncaoRecebe;
+    }
+
+    public Semantico() {
+    }
+
+
 
 
     public List<String> getNome() {

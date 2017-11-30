@@ -16,7 +16,7 @@ import java.util.Stack;
 public class ManipuladorAutomato {
 
     private int i, cont, contAux;
-    private String token;
+    private String token, tokenAux;
     private gets_sets_Tokens objToken;
     private boolean verifica = false, confereErro = false;
     private ProducoesCodificadas prodCod = new ProducoesCodificadas();
@@ -108,12 +108,12 @@ public class ManipuladorAutomato {
             }
 
         }
-        
+
         objToken.setErro("Variável não declarada!");
         objToken.setLinhaErro(cont);
 
     }
-    
+
     public void consultaDecFunc() {
 
         for (int i = 0; i < semantico.getNome().size(); i++) {
@@ -128,11 +128,47 @@ public class ManipuladorAutomato {
             }
 
         }
-        
+
         objToken.setErro("Função não declarada!");
         objToken.setLinhaErro(cont);
 
     }
+
+    public void armazenaFuncRecebe() {
+
+        List<String> funcP = semantico.getParamFuncaoRecebe();
+
+        for (int i = 0; i < semantico.getNomeFuncaoRecebe().size(); i++) {
+
+            if (semantico.getNomeFuncaoRecebe().get(i).equals(tokenAux)) {
+
+                if (semantico.getParamFuncaoRecebe().isEmpty()) {
+
+                    funcP.add(token);
+
+                } else {
+
+                    funcP.set(i, funcP.get(i).concat("," + token));
+
+                    semantico.setParamFuncaoRecebe(funcP);
+                }
+
+                return;
+
+            }
+
+        }
+
+    }
+    public void armazenaNomeFuncRecebe() {
+
+        tokenAux = token;
+
+        semantico.setNomeFuncaoRecebe(token);
+        semantico.setCategoria("Função");
+
+    }
+    
     
 
     public void verificaSintatico() {
@@ -230,9 +266,17 @@ public class ManipuladorAutomato {
                     case 103:
                         consultaDecVar();
                         break;
-                        
-                        case 104:
+
+                    case 104:
                         consultaDecFunc();
+                        break;
+
+                    case 110:
+                        armazenaFuncRecebe();
+                        break;
+
+                    case 109:
+                        armazenaNomeFuncRecebe();
                         break;
 
                     default:
