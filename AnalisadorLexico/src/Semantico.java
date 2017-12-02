@@ -17,10 +17,20 @@ public class Semantico {
     private List<String> nome = new ArrayList<>();
     private List<String> nomeFuncaoRecebe = new ArrayList<>();
     private List<String> ParamFuncaoRecebe = new ArrayList<>();
+    private List<String> tipoFuncaoRetorna = new ArrayList<>();
     private List<String> categoria = new ArrayList<>();
     private List<String> tipo = new ArrayList<>();
     private List<String> nivel = new ArrayList<>();
 
+    public List<String> getTipoFuncaoRetorna() {
+        return tipoFuncaoRetorna;
+    }
+
+    public void setTipoFuncaoRetorna(List<String> tipoFuncaoRetorna) {
+        this.tipoFuncaoRetorna = tipoFuncaoRetorna;
+    }
+
+    
     
     
     public List<String> getNomeFuncaoRecebe() {

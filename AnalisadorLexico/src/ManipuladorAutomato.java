@@ -48,6 +48,24 @@ public class ManipuladorAutomato {
         }
     }
 
+    public void insereTipoRetornoFuncao() {
+
+        List<String> retornoFunc = semantico.getTipoFuncaoRetorna();
+
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getNome().get(i).equals(token)) {
+
+                retornoFunc.add(semantico.getTipo().get(i));
+                        
+            }
+
+        }
+        
+        semantico.setTipoFuncaoRetorna(retornoFunc);
+        
+    }
+
     public void inserirVar(Integer x) {
 
         semantico.setNome(token);
@@ -167,22 +185,21 @@ public class ManipuladorAutomato {
         tokenAux = token;
 
         semantico.setNomeFuncaoRecebe(token);
-       
 
     }
 
     public void armazenaParamEnviado() {
 
-        if(x == 5){
+        if (x == 5) {
             tokenAux = "integer";
-        }else if(x == 6){
+        } else if (x == 6) {
             tokenAux = "float";
-        }else if(x == 9){
+        } else if (x == 9) {
             tokenAux = "string";
-        }else if(x == 8){
+        } else if (x == 8) {
             tokenAux = "char";
         }
-        
+
         for (int i = 0; i < semantico.getNome().size(); i++) {
 
             if (semantico.getNome().get(i).equals(token)) {
@@ -225,11 +242,10 @@ public class ManipuladorAutomato {
                 } else {
                     objToken.setErro("Função recebendo parâmetro inválido!");
                     objToken.setLinhaErro(cont);
-                    
+
                     paramEnviado = null;
                     tokenAux = null;
                     funcChamada = null;
-                    
 
                 }
 
@@ -356,6 +372,11 @@ public class ManipuladorAutomato {
 
                     case 112:
                         comparaParametros();
+                        break;
+
+                    case 113:
+                        insereTipoRetornoFuncao();
+                        
                         break;
 
                     default:

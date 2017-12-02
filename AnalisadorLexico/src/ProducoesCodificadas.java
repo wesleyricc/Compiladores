@@ -117,6 +117,7 @@ public class ProducoesCodificadas {
         nterminal[i].setProducao(50);
         nterminal[i].setProducao(35);
         nterminal[i].setProducao(42);
+        nterminal[i].setProducao(113);
         nterminal[i].setProducao(58);
         nterminal[i].setProducao(43);
         nterminal[i].setProducao(4);
