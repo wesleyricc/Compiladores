@@ -167,12 +167,22 @@ public class ManipuladorAutomato {
         tokenAux = token;
 
         semantico.setNomeFuncaoRecebe(token);
-        semantico.setCategoria("Função");
+       
 
     }
 
     public void armazenaParamEnviado() {
 
+        if(x == 5){
+            tokenAux = "integer";
+        }else if(x == 6){
+            tokenAux = "float";
+        }else if(x == 9){
+            tokenAux = "string";
+        }else if(x == 8){
+            tokenAux = "char";
+        }
+        
         for (int i = 0; i < semantico.getNome().size(); i++) {
 
             if (semantico.getNome().get(i).equals(token)) {
@@ -219,6 +229,7 @@ public class ManipuladorAutomato {
                     paramEnviado = null;
                     tokenAux = null;
                     funcChamada = null;
+                    
 
                 }
 

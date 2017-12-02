@@ -163,13 +163,13 @@ public class ProducoesCodificadas {
         //20
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(58);
-        nterminal[i].setProducao(108);
+        //nterminal[i].setProducao(108);
         nterminal[i].setProducao(5);
         i++;
         //21
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(58);
-        nterminal[i].setProducao(108);
+        //nterminal[i].setProducao(108);
         nterminal[i].setProducao(6);
         i++;
         //22
@@ -181,13 +181,13 @@ public class ProducoesCodificadas {
         //23
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(58);
-        nterminal[i].setProducao(108);
+        //nterminal[i].setProducao(108);
         nterminal[i].setProducao(8);
         i++;
         //24
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(58);
-        nterminal[i].setProducao(108);
+        //nterminal[i].setProducao(108);
         nterminal[i].setProducao(9);
         i++;
         //25
@@ -566,7 +566,7 @@ public class ProducoesCodificadas {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(63);
         nterminal[i].setProducao(74);
-        nterminal[i].setProducao(108);
+        //nterminal[i].setProducao(108);
         nterminal[i].setProducao(73);
         i++;
         //76
