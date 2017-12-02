@@ -16,7 +16,7 @@ import java.util.Stack;
 public class ManipuladorAutomato {
 
     private int i, cont, contAux;
-    private String token, tokenAux;
+    private String token, tokenAux, funcChamada, paramEnviado;
     private gets_sets_Tokens objToken;
     private boolean verifica = false, confereErro = false;
     private ProducoesCodificadas prodCod = new ProducoesCodificadas();
@@ -150,8 +150,9 @@ public class ManipuladorAutomato {
 
                     funcP.set(i, funcP.get(i).concat("," + token));
 
-                    semantico.setParamFuncaoRecebe(funcP);
                 }
+
+                semantico.setParamFuncaoRecebe(funcP);
 
                 return;
 
@@ -160,6 +161,7 @@ public class ManipuladorAutomato {
         }
 
     }
+
     public void armazenaNomeFuncRecebe() {
 
         tokenAux = token;
@@ -168,8 +170,62 @@ public class ManipuladorAutomato {
         semantico.setCategoria("Função");
 
     }
-    
-    
+
+    public void armazenaParamEnviado() {
+
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getNome().get(i).equals(token)) {
+
+                tokenAux = semantico.getTipo().get(i);
+
+            }
+        }
+
+        if (paramEnviado == null) {
+            paramEnviado = tokenAux;
+        } else {
+            paramEnviado = paramEnviado.concat("," + tokenAux);
+        }
+
+        return;
+
+    }
+
+    public void armazenaFuncaoChamada() {
+
+        funcChamada = token;
+
+    }
+
+    public void comparaParametros() {
+
+        for (int i = 0; i < semantico.getNomeFuncaoRecebe().size(); i++) {
+
+            if (semantico.getNomeFuncaoRecebe().get(i).equals(funcChamada)) {
+
+                if (semantico.getParamFuncaoRecebe().get(i).equals(paramEnviado)) {
+
+                    paramEnviado = null;
+                    tokenAux = null;
+                    funcChamada = null;
+
+                    return;
+
+                } else {
+                    objToken.setErro("Função recebendo parâmetro inválido!");
+                    objToken.setLinhaErro(cont);
+                    
+                    paramEnviado = null;
+                    tokenAux = null;
+                    funcChamada = null;
+
+                }
+
+            }
+        }
+
+    }
 
     public void verificaSintatico() {
 
@@ -277,6 +333,18 @@ public class ManipuladorAutomato {
 
                     case 109:
                         armazenaNomeFuncRecebe();
+                        break;
+
+                    case 111:
+                        armazenaFuncaoChamada();
+                        break;
+
+                    case 106:
+                        armazenaParamEnviado();
+                        break;
+
+                    case 112:
+                        comparaParametros();
                         break;
 
                     default:

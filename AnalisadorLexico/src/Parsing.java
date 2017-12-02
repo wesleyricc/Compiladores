@@ -100,6 +100,7 @@ public class Parsing {
         tabParsing[65][9] = 45;
         tabParsing[66][40] = 43;
         tabParsing[66][42] = 42;
+        //tabParsing[66][7] =  ????
         tabParsing[67][26] = 56;
         tabParsing[67][27] = 55;
         tabParsing[67][28] = 53;
