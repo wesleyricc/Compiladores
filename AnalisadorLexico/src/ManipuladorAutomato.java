@@ -16,7 +16,7 @@ import java.util.Stack;
 public class ManipuladorAutomato {
 
     private int i, cont, contAux;
-    private String token, tokenAux, funcChamada, paramEnviado;
+    private String token, tokenAux, funcChamada, paramEnviado, valorComparar, comparador;
     private gets_sets_Tokens objToken;
     private boolean verifica = false, confereErro = false;
     private ProducoesCodificadas prodCod = new ProducoesCodificadas();
@@ -57,13 +57,13 @@ public class ManipuladorAutomato {
             if (semantico.getNome().get(i).equals(token)) {
 
                 retornoFunc.add(semantico.getTipo().get(i));
-                        
+
             }
 
         }
-        
+
         semantico.setTipoFuncaoRetorna(retornoFunc);
-        
+
     }
 
     public void inserirVar(Integer x) {
@@ -254,6 +254,67 @@ public class ManipuladorAutomato {
 
     }
 
+    public void armazenarValorAComparar() {
+
+        if (x == 5) {
+            tokenAux = "integer";
+        } else if (x == 6) {
+            tokenAux = "float";
+        } else if (x == 9) {
+            tokenAux = "string";
+        } else if (x == 8) {
+            tokenAux = "char";
+        }
+
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getNome().get(i).equals(token)) {
+
+                tokenAux = semantico.getTipo().get(i);
+
+            }
+        }
+
+        valorComparar = tokenAux;
+
+    }
+
+    public void armazenarValorComparado() {
+
+        if (x == 5) {
+            tokenAux = "integer";
+        } else if (x == 6) {
+            tokenAux = "float";
+        } else if (x == 9) {
+            tokenAux = "string";
+        } else if (x == 8) {
+            tokenAux = "char";
+        }
+
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getNome().get(i).equals(token)) {
+
+                tokenAux = semantico.getTipo().get(i);
+
+            }
+        }
+
+        comparador = tokenAux;
+
+    }
+
+    public void compararValores() {
+
+        if (valorComparar.equals(comparador)) {
+            return;
+        } else {
+            objToken.setErro("Comparação com parâmetros de tipos diferentes!");
+            objToken.setLinhaErro(cont);
+        }
+
+    }
+
     public void verificaSintatico() {
 
         x = (Integer) pilha.peek();
@@ -376,7 +437,18 @@ public class ManipuladorAutomato {
 
                     case 113:
                         insereTipoRetornoFuncao();
-                        
+                        break;
+
+                    case 114:
+                        armazenarValorAComparar();
+                        break;
+
+                    case 105:
+                        armazenarValorComparado();
+                        break;
+
+                    case 115:
+                        compararValores();
                         break;
 
                     default:
